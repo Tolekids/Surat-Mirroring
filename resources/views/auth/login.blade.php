@@ -166,18 +166,7 @@
   }
   .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 0 var(--blue-deep), 0 18px 26px -6px rgba(20,72,204,.55); }
   .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--blue-deep), 0 4px 8px -2px rgba(20,72,204,.5); }
-  .btn:focus-visible, .demo-row button:focus-visible { outline: 3px solid rgba(29,92,255,.35); outline-offset: 3px; }
-
-  .demo { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
-  .demo p { font-size: 12.5px; color: var(--muted); margin-bottom: 10px; }
-  .demo-row { display: flex; gap: 8px; }
-  .demo-row button {
-    flex: 1; height: 38px; font: inherit; font-size: 13px; font-weight: 600; color: var(--blue);
-    background: #fff; border: 1px solid var(--blue-mid); border-radius: 9px; cursor: pointer;
-    box-shadow: 0 3px 0 var(--blue-mid); transition: transform .1s, box-shadow .1s, background .15s;
-  }
-  .demo-row button:hover { background: var(--blue-soft); }
-  .demo-row button:active { transform: translateY(3px); box-shadow: 0 0 0 var(--blue-mid); }
+  .btn:focus-visible { outline: 3px solid rgba(29,92,255,.35); outline-offset: 3px; }
 
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; max-width: 420px; }
@@ -238,17 +227,17 @@
           </div>
         @endif
 
-        <form action="{{ route('login') }}" method="POST">
+        <form action="{{ route('login') }}" method="POST" autocomplete="off">
           @csrf
 
           <div class="field">
             <label for="email">Alamat email</label>
-            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@kantor.go.id" autocomplete="username" required autofocus>
+            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@kantor.go.id" autocomplete="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly')" required>
           </div>
 
           <div class="field">
             <label for="password">Kata sandi</label>
-            <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" autocomplete="current-password" required>
+            <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" required>
           </div>
 
           <label class="check">
@@ -257,34 +246,11 @@
 
           <button type="submit" class="btn">Masuk</button>
         </form>
-
-        <section class="demo" aria-label="Akun demo">
-          <p>Uji coba cepat (akun demo)</p>
-          <div class="demo-row">
-            <button type="button" data-demo="atasan">Atasan</button>
-            <button type="button" data-demo="staf">Staf</button>
-            <button type="button" data-demo="admin">Admin</button>
-          </div>
-        </section>
       </div>
     </main>
   </div>
 
   <script>
-    // Kredensial demo resmi sesuai seeder aplikasi Mirroring Surat
-    const demo = {
-      atasan: { email: "atasan@kantor.go.id", password: "password" },
-      staf:   { email: "staf@kantor.go.id",   password: "password" },
-      admin:  { email: "admin@kantor.go.id",  password: "password" }
-    };
-    document.querySelectorAll("[data-demo]").forEach(b => b.addEventListener("click", () => {
-      const d = demo[b.dataset.demo];
-      if (d) {
-        document.getElementById("email").value = d.email;
-        document.getElementById("password").value = d.password;
-      }
-    }));
-
     // Efek kartu miring mengikuti kursor (3D tilt)
     const card = document.getElementById("card");
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
