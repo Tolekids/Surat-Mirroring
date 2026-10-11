@@ -1,0 +1,3 @@
+[build]
+  command = "npm run build && mkdir -p dist && cp -r public/build/* dist/ 2>/dev/null || true"
+  publish = "dist"
