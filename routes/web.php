@@ -44,9 +44,9 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:staf,admin')
         ->name('surat.destroy');
 
-    // Riwayat Aktivitas & Audit Trail (Dapat dilihat oleh Atasan & Admin)
+    // Riwayat Aktivitas & Audit Trail (Khusus Admin Sistem)
     Route::get('/activity-logs', [ActivityLogController::class, 'index'])
-        ->middleware('role:admin,atasan')
+        ->middleware('role:admin')
         ->name('activity_logs.index');
 
     // Manajemen Pengguna (Khusus Admin)

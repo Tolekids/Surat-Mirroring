@@ -175,4 +175,36 @@ class SuratFeatureTest extends TestCase
             'user_id' => $atasan->id,
         ]);
     }
+
+    public function test_atasan_or_kepala_bidang_cannot_access_activity_logs_page(): void
+    {
+        $atasan = User::factory()->create([
+            'name' => 'Kepala Bidang',
+            'role' => 'atasan',
+            'is_active' => true,
+        ]);
+
+        // Atasan / Kepala Bidang tidak boleh mengakses page riwayat aktivitas (403 Forbidden)
+        $response = $this->actingAs($atasan)->get('/activity-logs');
+        $response->assertStatus(403);
+
+        // Sidebar dan Dashboard tidak menampilkan menu/link ke page riwayat aktivitas
+        $dashboardResponse = $this->actingAs($atasan)->get('/dashboard');
+        $dashboardResponse->assertStatus(200);
+        $dashboardResponse->assertDontSee(route('activity_logs.index'));
+    }
+
+    public function test_admin_can_access_activity_logs_page(): void
+    {
+        $admin = User::factory()->create([
+            'name' => 'Admin Sistem',
+            'role' => 'admin',
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($admin)->get('/activity-logs');
+        $response->assertStatus(200);
+        $response->assertSee('Riwayat Aktivitas &amp; Audit Trail', false);
+    }
 }
+

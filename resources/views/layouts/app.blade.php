@@ -149,7 +149,7 @@
           <span>Upload Surat</span>
         </a>
       @endif
-      @if(auth()->user()->isAtasan() || auth()->user()->isAdmin())
+      @if(auth()->user()->isAdmin())
         <a href="{{ route('activity_logs.index') }}" class="{{ request()->routeIs('activity_logs.*') ? 'on' : '' }}">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
           <span>Riwayat Aktivitas</span>

@@ -125,7 +125,7 @@
   <section class="card-box">
     <div class="card-h">
       <h2>Log aktivitas terkini</h2>
-      @if(auth()->user()->isAtasan() || auth()->user()->isAdmin())
+      @if(auth()->user()->isAdmin())
         <a href="{{ route('activity_logs.index') }}" class="link">Semua log</a>
       @endif
     </div>
