@@ -199,7 +199,7 @@
     @yield('content')
 
     <footer class="dash-footer">
-      <span><b>Aplikasi Mirroring Surat</b> &copy; {{ date('Y') }} &mdash; Media penayangan &amp; salinan digital surat dinas.</span>
+      <span><b>Author : RUANG SINI</b> &copy; {{ date('Y') }} &mdash; APTIKA &amp; Surat salinan digital internal.</span>
       <span class="ok">Keamanan dokumen aktif</span>
     </footer>
   </main>
