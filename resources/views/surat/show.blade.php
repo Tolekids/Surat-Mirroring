@@ -106,7 +106,8 @@
       </div>
     </div>
 
-    <!-- Card Riwayat Audit Pembacaan Surat -->
+    @if(auth()->user()->isAdmin())
+    <!-- Card Riwayat Audit Pembacaan Surat (Khusus Admin) -->
     <div class="card-box">
       <div class="card-h">
         <h2>Jejak Audit Dokumen</h2>
@@ -139,6 +140,7 @@
         </ul>
       </div>
     </div>
+    @endif
   </div>
 
   <!-- Kolom Kanan: Penayangan PDF Mirroring Langsung (col-lg-8) -->

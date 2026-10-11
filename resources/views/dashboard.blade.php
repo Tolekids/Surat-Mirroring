@@ -67,7 +67,7 @@
   </div>
 </section>
 
-<div class="grid">
+<div class="grid {{ !auth()->user()->isAdmin() ? 'grid-full' : '' }}">
   <section class="card-box">
     <div class="card-h">
       <h2>Surat terbaru untuk ditinjau</h2>
@@ -122,12 +122,11 @@
     </div>
   </section>
 
+  @if(auth()->user()->isAdmin())
   <section class="card-box">
     <div class="card-h">
       <h2>Log aktivitas terkini</h2>
-      @if(auth()->user()->isAdmin())
-        <a href="{{ route('activity_logs.index') }}" class="link">Semua log</a>
-      @endif
+      <a href="{{ route('activity_logs.index') }}" class="link">Semua log</a>
     </div>
     <ul class="log">
       @forelse($aktivitasTerbaru as $log)
@@ -158,5 +157,6 @@
       @endforelse
     </ul>
   </section>
+  @endif
 </div>
 @endsection

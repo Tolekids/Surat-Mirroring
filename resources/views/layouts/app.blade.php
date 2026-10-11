@@ -66,6 +66,7 @@
   .stat small{color:var(--muted);font-size:12.5px}
 
   .grid{display:grid;grid-template-columns:minmax(0, 1fr) 320px;gap:16px;align-items:start}
+  .grid.grid-full{grid-template-columns:1fr}
   .card-box{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-width:0}
   .card-h{display:flex;justify-content:space-between;align-items:center;padding:18px 22px}
   .card-h h2{font-size:15px;font-weight:700;margin:0}

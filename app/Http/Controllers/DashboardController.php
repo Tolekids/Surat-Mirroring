@@ -27,10 +27,9 @@ class DashboardController extends Controller
             ->take(6)
             ->get();
 
-        $aktivitasTerbaru = ActivityLog::with(['user', 'surat'])
-            ->latest()
-            ->take(8)
-            ->get();
+        $aktivitasTerbaru = $user->isAdmin()
+            ? ActivityLog::with(['user', 'surat'])->latest()->take(8)->get()
+            : collect();
 
         return view('dashboard', compact('stats', 'suratTerbaru', 'aktivitasTerbaru', 'user'));
     }

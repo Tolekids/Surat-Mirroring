@@ -206,5 +206,60 @@ class SuratFeatureTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Riwayat Aktivitas &amp; Audit Trail', false);
     }
-}
 
+    public function test_atasan_and_staf_cannot_see_activity_logs_on_dashboard_and_surat_detail(): void
+    {
+        $atasan = User::factory()->create([
+            'name' => 'Kepala Bidang',
+            'role' => 'atasan',
+            'is_active' => true,
+        ]);
+
+        $staf = User::factory()->create([
+            'name' => 'Operator TU',
+            'role' => 'staf',
+            'is_active' => true,
+        ]);
+
+        $surat = Surat::create([
+            'nomor_surat' => '001/TEST/2026',
+            'tanggal_surat' => '2026-10-10',
+            'perihal' => 'Pengumuman Resmi',
+            'pengirim' => 'Sekretariat',
+            'kategori' => 'Surat Masuk',
+            'file_path' => 'surat/test.pdf',
+            'file_name' => 'test.pdf',
+            'file_size' => 1024,
+            'uploaded_by' => $staf->id,
+        ]);
+
+        // Atasan tidak melihat log aktivitas terkini di dashboard maupun jejak audit di detail surat
+        $this->actingAs($atasan)->get('/dashboard')
+            ->assertStatus(200)
+            ->assertDontSee('Log aktivitas terkini');
+
+        $this->actingAs($atasan)->get(route('surat.show', $surat))
+            ->assertStatus(200)
+            ->assertDontSee('Jejak Audit Dokumen');
+
+        // Staf/Operator tidak melihat log aktivitas terkini di dashboard maupun jejak audit di detail surat
+        $this->actingAs($staf)->get('/dashboard')
+            ->assertStatus(200)
+            ->assertDontSee('Log aktivitas terkini');
+
+        $this->actingAs($staf)->get(route('surat.show', $surat))
+            ->assertStatus(200)
+            ->assertDontSee('Jejak Audit Dokumen');
+
+        // Sebaliknya, Admin melihat log aktivitas terkini di dashboard dan jejak audit di detail surat
+        $admin = User::factory()->create(['role' => 'admin', 'is_active' => true]);
+
+        $this->actingAs($admin)->get('/dashboard')
+            ->assertStatus(200)
+            ->assertSee('Log aktivitas terkini');
+
+        $this->actingAs($admin)->get(route('surat.show', $surat))
+            ->assertStatus(200)
+            ->assertSee('Jejak Audit Dokumen');
+    }
+}
