@@ -262,5 +262,10 @@
       document.addEventListener("mouseleave", () => card.style.transform = "");
     }
   </script>
+
+  <footer class="site-footer">
+            <p>Author: RUANG SINI 2026</p>
+        </footer>
+</footer>
 </body>
 </html>
